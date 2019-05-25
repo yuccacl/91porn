@@ -1,13 +1,16 @@
 <?php
 require 'functions.php';
 $domain =$_COOKIE['91url'];
+$md5='file.php?url='.$aes->encrypt($domain.'/js/md5.js');
 #获取URL
 $url=$_REQUEST['url'];
+//$url="UzB4SUVFYzh5SzVMSlAwdHRLNnB2ZW9IYlYwYXFiRHNIZHVHODJSdUpkTG1pWncwS3loa1RVK3FIczZBR2JVMXN1OHVPd0pzaVRtOGJJTzFFOTBjaVFaZFpCNmZYdGRYK2lEYWNaVkpqSlJYeGRHOUR5eDlsSzdZVithUFBoSjBaOTVhUkxIcnFnZWNXL0xSOjpqZ7c%2BPz2DZZLzAe5aaTv5";
 //$url="encyT0d0Zm5OcnRqNEE5ZnNTM0NUMTJHdktXRXliWTBDbTNQU25ycVl3TE9HdEtEOjqkJq2sY6f0XavEaEhh07Ym";
 if(!$url){
     httpStatus(404);
 }
 $url=$aes->decrypt(urldecode($url));
+//var_dump($url);exit;
 if(!$url){
     httpStatus(403);
 }
@@ -19,7 +22,7 @@ $video = getVideo($url);
         <meta charset="utf-8">
         <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
         <meta name="format-detection" content="telephone=no">
-        <title>视频详情-91视频预览</title>
+        <title><?php echo $video['title']; ?></title>
         <link rel="stylesheet" href="frozenui/css/frozen.css">
         <link rel="stylesheet" href="frozenui/css/demo.css">
     </head>
@@ -52,7 +55,7 @@ $video = getVideo($url);
             <script src="https://cdn.fluidplayer.com/v2/current/fluidplayer.min.js"></script>
             <video id="my-video" controls style="width: 100%">
                 <!--source src="" type="video/mp4" /-->
-                <script language="JScript" type="text/jscript" src="file.php?url=<?php echo urlencode($aes->encrypt($domain.'/js/md5.js')); ?>"></script>
+                <script language="JScript" type="text/jscript" src="<?php echo $md5; ?>"></script>
                 <?php echo $video['video'] ?>
             </video>
             <script language="JScript" type="text/jscript"  src="//lib.sinaapp.com/js/jquery/3.1.0/jquery-3.1.0.min.js"></script>
@@ -69,7 +72,7 @@ $video = getVideo($url);
                 </div>
             </div>
         </section>
-        <script src="https://cdn.bootcss.com/clipboard.js/2.0.0/clipboard.min.js"></script>
+        <script type="text/javascript" src="https://cdn.bootcss.com/clipboard.js/2.0.0/clipboard.min.js"></script>
         <script>
             new ClipboardJS('.copy');
             $(document).ready(function(){
@@ -81,7 +84,18 @@ $video = getVideo($url);
                 var start = new Date().getTime();
                 while (true) if (new Date().getTime() - start > n) break;
             }
+            function showImgDelay(imgObj,imgSrc,maxErrorNum){
+                showSpan.innerHTML += "--" + maxErrorNum;
+                if(maxErrorNum>0){
+                    imgObj.onerror=function(){
+                        showImgDelay(imgObj,imgSrc,maxErrorNum-1);
+                    };
+                    setTimeout(function(){
+                        imgObj.src=imgSrc;
+                    },500);
+                }
+            }
         </script>
-
+        <span id="showSpan" style="display:none"></span>
     </body>
 </html>

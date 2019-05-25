@@ -5,6 +5,8 @@ require_once 'lib/phpQuery.php';
 require_once 'lib/QueryList.php';
 require_once 'lib/aes.php';
 include_once "lib/Snoopy.class.php";
+require_once 'lib/cache/Driver.php';
+require_once 'lib/cache/driver/File.php';
 //require_once 'vendor/autoload.php';
 include_once 'config.php';
 
@@ -24,7 +26,8 @@ function getList($domain="http://www.91porn.com",$page = 1){
 
     $category = $_COOKIE["category"];
 
-	$url = $domain."/video.php?". ($category == '' ? "" : "category={$category}") ."&page=".$page;
+
+	$url = $domain."/video.php?". ($category == 'all' ? "" : "category={$category}") ."&page=".$page;
     //echo $url;
 	$html = getHtml($url);
 	//echo $html;

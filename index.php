@@ -1,6 +1,7 @@
 <?php
 require_once 'functions.php';
-
+//加载缓存类
+$file=new \lib\cache\driver\File();
 #获取URL
 if($_REQUEST["domain"]){
 	$domain = urldecode($_REQUEST["domain"]);
@@ -28,7 +29,14 @@ if($_REQUEST["page"]){
 if($_GET['category']){
     setcookie('category',$_GET['category']);
 }
-$list = getList($domain,$page);
+$category = $_COOKIE["category"];
+
+$cacheName = $domain."/video.php?". ($category == '' ? "" : "category={$category}") ."&page=".$page;//缓存名
+$list=$file->get($cacheName);
+if(!$list){
+    $list = getList($domain,$page);
+    $file->set($cacheName,$list,3600);//缓存一小时
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -37,7 +45,7 @@ $list = getList($domain,$page);
         <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
         <meta name="format-detection" content="telephone=no">
         <title>视频列表-91视频预览</title>
-        <!--<script type="text/javascript" src="http://tajs.qq.com/stats?sId=37342703" charset="UTF-8"></script>-->
+        <script type="text/javascript" src="http://tajs.qq.com/stats?sId=37342703" charset="UTF-8"></script>
         <link rel="stylesheet" href="frozenui/css/frozen.css">
         <link rel="stylesheet" href="frozenui/css/demo.css">
         <script src="frozenui/lib/zepto.min.js"></script>
@@ -61,7 +69,7 @@ $list = getList($domain,$page);
                         <label>分类</label>
                         <div class="ui-select" style="background-color: #5fb336">
                             <select id="category" name="category">
-                                <option value="">全部</option>
+                                <option value="all">全部</option>
                                 <option value="rf">精华</option>
                                 <option value="hot">当前最热</option>
                                 <option value="rp">最近得分</option>
@@ -86,7 +94,8 @@ $list = getList($domain,$page);
 	                    <li data-href="video.php?url=<?php echo urlencode($aes->encrypt($value["link"])); ?>">
 	                        <div class="ui-border">
 	                            <div class="ui-grid-trisect-img">
-                                    <img src="<?php echo $value["pic"]; ?>" onerror="showImgDelay(this,'pic.php?url=<?php echo urlencode($aes->encrypt($value['pic'])); ?>',1)">
+                                    <img src="<?php echo  $value["pic"]; ?>" onerror="showImgDelay(this,'<?php echo 'pic.php?url='.urlencode($aes->encrypt($value['pic'])); ?>',1,<?php echo $key; ?>);">
+                                    <span id="showSpan<?php echo $key; ?>" style="display:none"></span>
 	                            </div>
 	                            <div style="padding: 2%;height:250px;">
 	                                <h4 class="ui-nowrap-multi" style="height:50px"><?php echo $value["title"]; ?></h4>
@@ -97,6 +106,23 @@ $list = getList($domain,$page);
                 	<?php }	?>
                     
                 </ul>
+                <script>
+                    function showImgDelay(imgObj,imgSrc,maxErrorNum,k){
+                        document.getElementById("showSpan"+k).innerHTML += "--" + maxErrorNum;
+                        if(maxErrorNum>0){
+                            imgObj.onerror=function(){
+                                showImgDelay(imgObj,imgSrc,maxErrorNum-1,k);
+                            };
+                            setTimeout(function(){
+                                imgObj.src=imgSrc;
+                            },500);
+
+                        }else{
+                            imgObj.onerror=null;
+                            imgObj.src="frozenui/img/default.jpg";
+                        }
+                    }
+                </script>
             </section>
         </div>
     </div>
@@ -125,19 +151,7 @@ $list = getList($domain,$page);
             });
             $("#category").val($.cookie("category"));
         })
-        function showImgDelay(imgObj,imgSrc,maxErrorNum){
-            showSpan.innerHTML += "--" + maxErrorNum;
-            if(maxErrorNum>0){
-                imgObj.onerror=function(){
-                    showImgDelay(imgObj,imgSrc,maxErrorNum-1);
-                };
-                setTimeout(function(){
-                    imgObj.src=imgSrc;
-                },500);
-            }
-        }
         </script>
-        <span id="showSpan" style="display:none"></span>
     </body>
 </html>
 

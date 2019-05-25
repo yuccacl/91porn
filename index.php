@@ -9,7 +9,15 @@ if($_COOKIE['91url']){
     $domain =$_COOKIE['91url'];
 }
 if($domain == ''){
-    !function_exists('getConfig')?$domain="http://430.dxtx-sordera.org":$domain="http://www.91porn.com";
+    //判断服务器ip属于国内还是国外
+    $lang = file_get_contents("http://api.wipmania.com/");
+    if (strstr(strtolower($lang),"cn")===false){
+        //国外服务器，推荐域名
+        $domain='http://www.91porn.com';
+}else{
+        //国内服务器，推荐域名
+        $domain='http://430.dxtx-sordera.org';
+    }
 }
 setcookie('91url',$domain);
 
@@ -75,10 +83,10 @@ $list = getList($domain,$page);
                 <ul class="ui-grid-trisect">
                 	<?php
                 	foreach ($list as $key => $value) {  ?>              		
-	                    <li data-href="video.php?url=<?php echo urlencode($aes->encryot($value["link"])); ?>">
+	                    <li data-href="video.php?url=<?php echo urlencode($aes->encrypt($value["link"])); ?>">
 	                        <div class="ui-border">
 	                            <div class="ui-grid-trisect-img">
-                                    <img src="<?php echo $value["pic"]?>" onerror="showImgDelay(this,'pic.php?url=<?php echo urlencode($aes->encrypt($value['pic']))?>',1)">
+                                    <img src="<?php echo $value["pic"]; ?>" onerror="showImgDelay(this,'pic.php?url=<?php echo urlencode($aes->encrypt($value['pic'])); ?>',1)">
 	                            </div>
 	                            <div style="padding: 2%;height:250px;">
 	                                <h4 class="ui-nowrap-multi" style="height:50px"><?php echo $value["title"]; ?></h4>

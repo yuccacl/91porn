@@ -1,5 +1,5 @@
 <?php
-//error_reporting(0);
+error_reporting(0);
 #引入模块
 require_once 'lib/phpQuery.php';
 require_once 'lib/QueryList.php';
@@ -9,6 +9,7 @@ include_once "lib/Snoopy.class.php";
 include_once 'config.php';
 
 $aes=new aes(isset($key)?$key:'hello_world');
+ini_set('memory_limit', '1024M');
 function getList($domain="http://www.91porn.com",$page = 1){
     //video.php?category=hot&viewtype=basic 当前最热
     //video.php?category=rp&viewtype=basic 最近得分

@@ -24,7 +24,7 @@
 
 3.点击进入视频详情页
 
-<img src="https://91.scjtqs.com:8444/frozenui/img/007452UMly1foya3q7nn8j30b60bf763.png"/>
+<img src="frozenui/img/007452UMly1foya3q7nn8j30b60bf763.png"/>
 
 如无法正常播放，直接刷新页面即可。
 

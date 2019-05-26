@@ -22,6 +22,10 @@ $video = getVideo($url);
         <meta charset="utf-8">
         <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
         <meta name="format-detection" content="telephone=no">
+		<meta http-equiv="Expires" content="0">
+		<meta http-equiv="Pragma" content="no-cache">
+		<meta http-equiv="Cache-control" content="no-cache">
+		<meta http-equiv="Cache" content="no-cache">
         <title><?php echo $video['title']; ?></title>
         <link rel="stylesheet" href="frozenui/css/frozen.css">
         <link rel="stylesheet" href="frozenui/css/demo.css">

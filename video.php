@@ -5,17 +5,28 @@ $domain =$_COOKIE['91url'];
 $md5='file.php?url='.$aes->encrypt($domain.'/js/md5.js');
 #获取URL
 $url=$_REQUEST['url'];
-//$url="UzB4SUVFYzh5SzVMSlAwdHRLNnB2ZW9IYlYwYXFiRHNIZHVHODJSdUpkTG1pWncwS3loa1RVK3FIczZBR2JVMXN1OHVPd0pzaVRtOGJJTzFFOTBjaVFaZFpCNmZYdGRYK2lEYWNaVkpqSlJYeGRHOUR5eDlsSzdZVithUFBoSjBaOTVhUkxIcnFnZWNXL0xSOjpqZ7c%2BPz2DZZLzAe5aaTv5";
 //$url="encyT0d0Zm5OcnRqNEE5ZnNTM0NUMTJHdktXRXliWTBDbTNQU25ycVl3TE9HdEtEOjqkJq2sY6f0XavEaEhh07Ym";
 if(!$url){
     httpStatus(404);
 }
-$url=$aes->decrypt(urldecode($url));
 //var_dump($url);exit;
 if(!$url){
     httpStatus(403);
 }
-$video = getVideo($url);
+$file=new \lib\cache\driver\File();
+$data=$file->get($url);
+if(!$data){
+    $url=$aes->decrypt(urldecode($url));
+    if(!strstr($url,'http')){
+        httpStatus(404);
+    }
+    $data=getVideo($url);
+    if(!$data['title']){
+        httpStatus(404);
+    }
+    $file->set($_GET['url'],$data,7200);
+}
+$video = $data;
 ?>
 <!DOCTYPE html>
 <html>
@@ -23,10 +34,10 @@ $video = getVideo($url);
         <meta charset="utf-8">
         <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
         <meta name="format-detection" content="telephone=no">
-		<meta http-equiv="Expires" content="0">
-		<meta http-equiv="Pragma" content="no-cache">
-		<meta http-equiv="Cache-control" content="no-cache">
-		<meta http-equiv="Cache" content="no-cache">
+        <meta http-equiv="Expires" content="0">
+        <meta http-equiv="Pragma" content="no-cache">
+        <meta http-equiv="Cache-control" content="no-cache">
+        <meta http-equiv="Cache" content="no-cache">
         <title><?php echo $video['title']; ?></title>
         <link rel="stylesheet" href="frozenui/css/frozen.css">
         <link rel="stylesheet" href="frozenui/css/demo.css">
@@ -67,7 +78,8 @@ $video = getVideo($url);
             <div class="demo-block">
                 <div class="ui-form ui-border-t">
                     <div class="ui-form-item ui-form-item-link ui-border-b">
-                        <a target="_blank" href="<?php echo $video['video']; ?>"真实地址（长按另存，短按新窗口打开）</a>
+                        <a target="_blank" id="videoUrl2" href="">真实地址（长按另存，短按新窗口打开）</a>
+                        <?php echo $video['video']; ?>
                     </div>
                     <div class="ui-form-item ui-form-item-r ui-border-b">
                         <input type="text" id="videoUrl" placeholder="真实地址" value="">
@@ -84,6 +96,7 @@ $video = getVideo($url);
                 var videoUrl=$('source')[0].src;
                 console.log(videoUrl);
                 $("#videoUrl").val(videoUrl);
+                $("#videoUrl2").attr('href',videoUrl);
             });
             function sleep(n) { //n表示的毫秒数
                 var start = new Date().getTime();

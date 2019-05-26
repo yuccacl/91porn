@@ -1,5 +1,5 @@
 <?php
-error_reporting(0);
+//error_reporting(0);
 #引入模块
 require_once 'lib/phpQuery.php';
 require_once 'lib/QueryList.php';

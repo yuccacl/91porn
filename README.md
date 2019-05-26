@@ -11,7 +11,7 @@
 
 项目基于PHP,自动获取91视频，并解析真实地址,通过伪装客户端IP，绕过游客10次观看限制
 
-样例地址 ：哈。这里我就不放样例地址了，防止河蟹。
+样例地址 ：<a href="http://scjtqs.vastserve.com/" target="_blank" >http://scjtqs.vastserve.com</a>国外的免费php空间，速度很渣
 
 
 1.直接进入设置可设置访问域名和页码，如果部署至国内服务器，需设置免番地址，国外服务器推荐用原始地址 http://ip/set.php

@@ -1,4 +1,5 @@
 <?php
+define('ROOT',__DIR__);
 require_once 'functions.php';
 //加载缓存类
 $file=new \lib\cache\driver\File();

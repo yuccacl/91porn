@@ -1,4 +1,5 @@
 <?php
+define('ROOT',__DIR__);
 require 'functions.php';
 $domain =$_COOKIE['91url'];
 $md5='file.php?url='.$aes->encrypt($domain.'/js/md5.js');

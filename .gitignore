@@ -2,3 +2,4 @@ config.php
 test.php
 .DS_Store
 cache/*
+.idea

@@ -2,6 +2,9 @@
 
 91Porn手机版，完全无广告，无多余信息，突破游客每天只能看10次的限制。
 
+## windows 便捷版本
+
+下载地址：<a href="https://github.com/scjtqs/91porn/releases/tag/2.0">releases</a>
 
 ## 原理简介
 

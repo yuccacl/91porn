@@ -2,8 +2,6 @@
 
 91Porn手机版，完全无广告，无多余信息，突破游客每天只能看10次的限制。
 
-## windows版本下载测试
-下载地址：<a href ="https://github.com/scjtqs/91porn/releases/download/2.0/91porn-win-desktop.zip" target="_blank">91porn-win-desktop.zip</a>
 
 ## 原理简介
 

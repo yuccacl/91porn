@@ -273,7 +273,7 @@ function superCurl($url,$post=null,$cookie=null,$headers=[],$proxy=null){
     }
     if($headers){
         curl_setopt($ch,CURLOPT_HTTPHEADER,$headers);
-        curl_setopt($ch, CURLOPT_REFERER, $this->base_url);//模拟来路
+//        curl_setopt($ch, CURLOPT_REFERER, $this->base_url);//模拟来路
     }else{
         curl_setopt($ch,CURLOPT_HEADER,false);
     }

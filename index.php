@@ -1,6 +1,6 @@
 <?php
 define('ROOT',__DIR__);
-require_once 'functions.php';
+require_once ROOT.DIRECTORY_SEPARATOR.'functions.php';
 //加载缓存类
 $file=new \lib\cache\driver\File();
 #获取URL

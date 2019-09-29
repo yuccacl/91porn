@@ -18,7 +18,7 @@ if($domain == ''){
         $domain='http://www.91porn.com';
 }else{
         //国内服务器，推荐域名
-        $domain='http://430.dxtx-sordera.org';
+        $domain='https://626.workarea3.live';
     }
 }
 setcookie('91url',$domain);

@@ -1,14 +1,14 @@
 <?php
 //error_reporting(0);
 #引入模块
-require_once 'lib/phpQuery.php';
-require_once 'lib/QueryList.php';
-require_once 'lib/aes.php';
-include_once "lib/Snoopy.class.php";
-require_once 'lib/cache/Driver.php';
-require_once 'lib/cache/driver/File.php';
+require_once ROOT.DIRECTORY_SEPARATOR.'lib/phpQuery.php';
+require_once ROOT.DIRECTORY_SEPARATOR.'lib/QueryList.php';
+require_once ROOT.DIRECTORY_SEPARATOR.'lib/aes.php';
+include_once ROOT.DIRECTORY_SEPARATOR."lib/Snoopy.class.php";
+require_once ROOT.DIRECTORY_SEPARATOR.'lib/cache/Driver.php';
+require_once ROOT.DIRECTORY_SEPARATOR.'lib/cache/driver/File.php';
 //require_once 'vendor/autoload.php';
-include_once 'config.php';
+include_once ROOT.DIRECTORY_SEPARATOR.'config.php';
 
 $aes=new aes(isset($key)?$key:'hello_world');
 ini_set('memory_limit', '1024M');

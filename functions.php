@@ -108,19 +108,34 @@ function getHtml($url){
     if(isset($proxy)){
         //配置有代理
         $header = [
-            'X-FORWARDED-FOR:' . $ip,
+//            'X-FORWARDED-FOR:' . $ip,
             'CLIENT-IP:' . $ip,
             'Accept-language: zh-cn',
             'HTTP_X-FORWARDED-FOR:' . $ip,
             'Content-Type: text/html:charset=utf-8',
+            "Proxy-Connection: keep-alive",
+            "x-forwarded-for: {$ip}",
+            "Proxy-Client-IP: {$ip}",
+            "WL-Proxy-Client-IP: {$ip}",
+            "CLIENT-IP': {$ip}",
+            "Referer: http://91porn.com",
+            "User-Agent: Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/31.0.1650.63 Safari/537.36 115Browser/5.1.3",
+            "Cookie: ".COOKIE,
         ];
-        $result=superCurl($url,',',$header,$proxy);
+        $result=superCurl($url,'','',$header,$proxy);
         return $result['data'];
     }else{
         $snoopy->rawheaders["Accept-language"] = "zh-cn"; //cache 的http头信息
         $snoopy->rawheaders["Content-Type"] = "text/html; charset=utf-8"; //cache 的http头信息
         $snoopy->rawheaders["CLIENT-IP"] = $ip; //伪装ip
         $snoopy->rawheaders["HTTP_X_FORWARDED_FOR"] = $ip; //伪装ip
+        $snoopy->rawheaders["Proxy-Connection"] = 'keep-alive';
+        $snoopy->rawheaders["x-forwarded-for"] =$ip;
+        $snoopy->rawheaders["Proxy-Client-IP"] =$ip;
+        $snoopy->rawheaders["WL-Proxy-Client-IP"] =$ip;
+        $snoopy->rawheaders["User-Agent"] ='Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/31.0.1650.63 Safari/537.36 115Browser/5.1.3';
+        $snoopy->rawheaders["Referer"] ="http://91porn.com";
+        $snoopy->rawheaders["Cookie"] =COOKIE;
 
         $snoopy->fetch($url);
         return $snoopy->results;
@@ -273,7 +288,7 @@ function superCurl($url,$post=null,$cookie=null,$headers=[],$proxy=null){
     }
     if($headers){
         curl_setopt($ch,CURLOPT_HTTPHEADER,$headers);
-//        curl_setopt($ch, CURLOPT_REFERER, $this->base_url);//模拟来路
+        curl_setopt($ch, CURLOPT_REFERER, "http://91porn.com");//模拟来路
     }else{
         curl_setopt($ch,CURLOPT_HEADER,false);
     }

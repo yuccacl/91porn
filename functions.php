@@ -1,7 +1,7 @@
 <?php
 //error_reporting(0);
-//ini_set('display_errors','on');
-//error_reporting(E_ALL & ~E_NOTICE);
+ini_set('display_errors','on');
+error_reporting(E_ALL & ~E_NOTICE);
 #引入模块
 require_once ROOT.DIRECTORY_SEPARATOR.'lib/phpQuery.php';
 require_once ROOT.DIRECTORY_SEPARATOR.'lib/QueryList.php';
@@ -79,7 +79,8 @@ function randIp(){
 function getVideo($url){
 
 	$html = getHtml($url);
-    $html=substr($html,4);
+//    $html=substr($html,4);
+//    var_dump($html);exit;
     $dom = new \DOMDocument();
     //从一个字符串加载HTML
     @$dom->loadHTML($html);
@@ -88,9 +89,11 @@ function getVideo($url){
     //用DOMXpath加载DOM，用于查询
     $xpath = new \DOMXPath($dom);
     $title=$xpath->query('//*[@id="viewvideo-title"]')->item(0)->textContent;
-    $video=$xpath->query('//*[@id="player_one"]/script[1]')->item(0);//video
+//    $video=$xpath->query('//*[@id="player_one"]/script[1]')->item(0);//video
+    $video=$xpath->query('//*[@id="player_one"]/source')->item(0);//video
 //    $info=$xpath->query('//*[@id="useraction"]/div[1]')->item(0);
     $video=$video->ownerDocument->saveHTML($video);
+//    var_dump($video);exit;
 //    $info=$info->ownerDocument->saveHTML($info);
     $data=[
         'video'=>$video,

@@ -1,7 +1,8 @@
 <?php
-//error_reporting(0);
-ini_set('display_errors','on');
-error_reporting(E_ALL & ~E_NOTICE);
+ini_set('display_errors','off');
+error_reporting(0);
+//ini_set('display_errors','on');
+//error_reporting(E_ALL & ~E_NOTICE);
 #引入模块
 require_once ROOT.DIRECTORY_SEPARATOR.'lib/phpQuery.php';
 require_once ROOT.DIRECTORY_SEPARATOR.'lib/QueryList.php';

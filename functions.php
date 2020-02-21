@@ -1,8 +1,8 @@
 <?php
-ini_set('display_errors','off');
-error_reporting(0);
-//ini_set('display_errors','on');
-//error_reporting(E_ALL & ~E_NOTICE);
+ini_set('display_errors','off');//完全屏蔽错误
+error_reporting(0);//完全屏蔽错误
+//ini_set('display_errors','on');//打开错误提示
+//error_reporting(E_ALL & ~E_NOTICE);//打开错误提示
 #引入模块
 require_once ROOT.DIRECTORY_SEPARATOR.'lib/phpQuery.php';
 require_once ROOT.DIRECTORY_SEPARATOR.'lib/QueryList.php';

@@ -91,7 +91,7 @@ function getVideo($url){
     $xpath = new \DOMXPath($dom);
     $title=$xpath->query('//*[@id="viewvideo-title"]')->item(0)->textContent;
 //    $video=$xpath->query('//*[@id="player_one"]/script[1]')->item(0);//video
-    $video=$xpath->query('//*[@id="player_one"]/source')->item(0);//video
+    $video=$xpath->query('//*[@id="player_one"]/*')->item(0);//video
 //    $info=$xpath->query('//*[@id="useraction"]/div[1]')->item(0);
     $video=$video->ownerDocument->saveHTML($video);
 //    var_dump($video);exit;
